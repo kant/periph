@@ -29,27 +29,27 @@ import (
 	"periph.io/x/periph/conn"
 	"periph.io/x/periph/conn/gpio"
 	"periph.io/x/periph/conn/i2c"
+	"periph.io/x/periph/conn/physic"
 	"periph.io/x/periph/conn/spi"
-	"periph.io/x/periph/devices"
 	"periph.io/x/periph/devices/lepton/cci"
 	"periph.io/x/periph/devices/lepton/internal"
 )
 
 // Metadata is constructed from telemetry data, which is sent with each frame.
 type Metadata struct {
-	SinceStartup   time.Duration   //
-	FrameCount     uint32          // Number of frames since the start of the camera, in 27fps (not 9fps).
-	AvgValue       uint16          // Average value of the buffer.
-	Temp           devices.Celsius // Temperature inside the camera.
-	TempHousing    devices.Celsius // Camera housing temperature.
-	RawTemp        uint16          //
-	RawTempHousing uint16          //
-	FFCSince       time.Duration   // Time since last internal calibration.
-	FFCTemp        devices.Celsius // Temperature at last internal calibration.
-	FFCTempHousing devices.Celsius //
-	FFCState       cci.FFCState    // Current calibration state.
-	FFCDesired     bool            // Asserted at start-up, after period (default 3m) or after temperature change (default 3°K). Indicates that a calibration should be triggered as soon as possible.
-	Overtemp       bool            // true 10s before self-shutdown.
+	SinceStartup   time.Duration  //
+	FrameCount     uint32         // Number of frames since the start of the camera, in 27fps (not 9fps).
+	AvgValue       uint16         // Average value of the buffer.
+	Temp           physic.Celsius // Temperature inside the camera.
+	TempHousing    physic.Celsius // Camera housing temperature.
+	RawTemp        uint16         //
+	RawTempHousing uint16         //
+	FFCSince       time.Duration  // Time since last internal calibration.
+	FFCTemp        physic.Celsius // Temperature at last internal calibration.
+	FFCTempHousing physic.Celsius //
+	FFCState       cci.FFCState   // Current calibration state.
+	FFCDesired     bool           // Asserted at start-up, after period (default 3m) or after temperature change (default 3°K). Indicates that a calibration should be triggered as soon as possible.
+	Overtemp       bool           // true 10s before self-shutdown.
 }
 
 // Frame is a FLIR Lepton frame, containing 14 bits resolution intensity stored
