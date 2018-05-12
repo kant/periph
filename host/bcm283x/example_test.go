@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 
+	"periph.io/x/periph/conn/physic"
 	"periph.io/x/periph/host"
 	"periph.io/x/periph/host/bcm283x"
 )
@@ -78,4 +79,13 @@ func ExamplePinsSet0To31() {
 
 	// Simultaneously sets GPIO4 and GPIO16 to gpio.High.
 	bcm283x.PinsClear0To31(1<<16 | 1<<4)
+}
+
+func ExamplePinsSetup0To27() {
+	if err := bcm283x.PinsSetup0To27(physic.Ampere(16), true, true); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("drive:      %s", bcm283x.GPIO0.Drive())
+	fmt.Printf("slew:       %t", bcm283x.GPIO0.SlewLimit())
+	fmt.Printf("hysteresis: %t", bcm283x.GPIO0.Hysteresis())
 }
